@@ -2,13 +2,30 @@
   "name": "visible-visual",
   "type": "module",
   "version": "0.0.1",
+  "description": "asiix Official Website - Music Artist Portfolio",
+  "author": "asiix",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check",
+    "format": "prettier --write \"src/**/*\" \"public/**/*\"",
+    "lint": "eslint src",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "astro": "^5.5.5"
+    "astro": "^5.5.5",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.0",
+    "terser": "^5.44.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }
