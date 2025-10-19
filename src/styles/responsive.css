@@ -8,22 +8,30 @@
 }
 
 /* Tablet (768px to 1023px) */
-@media (max-width: 1023px) {
+@media (max-width: 1023px) and (min-width: 768px) {
+  /* Header & Navigation */
   .title {
     font-size: 24pt;
     margin-bottom: 30px;
   }
 
   .header {
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
   }
 
   .logo img {
-    height: 40px;
+    height: 45px;
+    width: 45px;
   }
 
-  .dropdown-content {
+  .navbar {
+    padding: 0 1rem;
     gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 16px;
   }
 
   .dropdown-btn {
@@ -41,13 +49,48 @@
     font-size: 1.5rem;
   }
 
+  /* Dropdown Menu */
+  .dropdown-content {
+    gap: 1.5rem;
+  }
+
+  .dropdown-content a {
+    font-size: 28px;
+    margin: 15px 0;
+  }
+
+  .dropdown-content .social-links {
+    bottom: 50px;
+    gap: 30px;
+  }
+
+  .dropdown-content .social-links a {
+    font-size: 22px;
+  }
+
+  .exit-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .exit-btn i {
+    font-size: 18px;
+  }
+
+  /* Content */
+  .content {
+    padding: 40px 25px 80px;
+    min-height: calc(100vh - 120px);
+  }
+
   /* Gallery */
   .gallery-container {
     max-height: 50vh;
+    aspect-ratio: 16/9;
   }
 
   .gallery-item {
-    width: 50%;
+    width: 55%;
   }
 
   .gallery-item.far-far-prev,
@@ -56,27 +99,121 @@
   }
 
   .gallery-item.far-prev {
-    transform: translate(-100%, -50%) scale(0.6);
+    transform: translate(-100%, -50%) scale(0.65);
+    opacity: 0.7;
   }
 
   .gallery-item.far-next {
-    transform: translate(0%, -50%) scale(0.6);
+    transform: translate(0%, -50%) scale(0.65);
+    opacity: 0.7;
   }
 
-  /* Navigation */
-  .nav-links {
-    gap: 1rem;
+  .gallery-item img {
+    object-fit: contain;
   }
 
-  /* Projects Grid */
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+  .pagination {
+    gap: 1.2rem;
   }
 
-  /* Blog Posts */
-  .blog-post {
-    padding: 1rem;
+  .pagination button {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .page-number {
+    font-size: 1rem;
+  }
+
+  /* Profile */
+  .profile-container {
+    padding: 0 25px;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .profile_img {
+    width: 280px;
+    height: 380px;
+  }
+
+  .profile-info {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .profile-name {
+    font-size: 22pt;
+    width: 100%;
+  }
+
+  .profile-details {
+    font-size: 11pt;
+  }
+
+  /* Video */
+  .video-wrapper {
+    height: auto;
+    padding: 15px;
+  }
+
+  .video-container {
+    max-width: 100%;
+    gap: 15px;
+  }
+
+  .video-item iframe {
+    max-width: 100%;
+    height: 280px;
+  }
+
+  .video-item p {
+    font-size: 1rem;
+  }
+
+  .video-item span {
+    font-size: 0.85rem;
+  }
+
+  /* Discography */
+  .discography-wrapper {
+    padding: 30px 25px;
+  }
+
+  .album-container {
+    max-width: 100%;
+  }
+
+  .album-page {
+    gap: 25px;
+  }
+
+  .album-item {
+    flex: 0 0 180px;
+  }
+
+  .album-item p {
+    font-size: 1.1rem;
+    margin: 12px 0 3px;
+  }
+
+  .album-item span {
+    font-size: 0.85rem;
+  }
+
+  /* Lightbox */
+  .lightbox-content {
+    max-width: 90vw;
+    max-height: 80vh;
+    padding: 15px;
+  }
+
+  .lightbox-content img {
+    max-height: 80vh;
   }
 
   /* Sidebar */
@@ -97,23 +234,54 @@
   .page-title {
     font-size: 0.9rem;
   }
+
+  /* Footer */
+  .footer-content {
+    padding: 0 15px;
+    gap: 15px;
+  }
+
+  .footer .social-links {
+    gap: 20px;
+  }
+
+  .footer .social-links a,
+  .footer .social-links a i {
+    font-size: 20px;
+  }
+
+  .footer p {
+    font-size: 14px;
+  }
 }
 
-/* Mobile (up to 767px) */
-@media (max-width: 767px) {
+/* Mobile (480px to 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+  /* Header & Navigation */
   .title {
     font-size: 20pt;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     width: 100%;
     text-align: center;
   }
 
   .header {
-    padding: 0.8rem;
+    padding: 1rem 0.8rem;
+    gap: 0.5rem;
   }
 
   .logo img {
-    height: 35px;
+    height: 38px;
+    width: 38px;
+  }
+
+  .navbar {
+    padding: 0;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    font-size: 14px;
   }
 
   /* Dropdown/Menu */
@@ -131,8 +299,10 @@
     justify-content: center;
     align-items: center;
     padding: 0;
+    padding-top: 60px;
     transform: translateX(100%);
     overflow: hidden;
+    z-index: 1000;
   }
 
   .dropdown-content.show {
@@ -140,102 +310,270 @@
   }
 
   .dropdown-content a {
-    margin: 10px 0;
+    margin: 12px 0;
     font-size: 24px;
+    color: #fff;
   }
 
   .dropdown-content .social-links {
     position: absolute;
-    bottom: 40px;
+    bottom: 45px;
     left: 0;
     width: 100%;
     justify-content: center;
+    gap: 30px;
+  }
+
+  .dropdown-content .social-links a {
+    font-size: 22px;
   }
 
   .dropdown-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
   .dropdown-btn i {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
+  }
+
+  .exit-btn {
+    width: 34px;
+    height: 34px;
+    top: 1rem;
+    right: 0.8rem;
+  }
+
+  .exit-btn i {
+    font-size: 18px;
+  }
+
+  /* Content */
+  .content {
+    padding: 35px 15px 75px;
+    min-height: calc(100vh - 100px);
+    width: 100%;
   }
 
   /* Gallery */
   .gallery-container {
-    max-height: 40vh;
+    max-height: 45vh;
+    aspect-ratio: 16/9;
+    width: 100%;
   }
 
-  /* Navigation */
-  .nav-links {
-    flex-direction: column;
-    position: fixed;
-    top: 0;
-    right: -100%;
-    height: 100vh;
-    width: 70%;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 2rem;
-    transition: right 0.3s ease;
+  .gallery-item {
+    width: 65%;
   }
 
-  .nav-links.active {
-    right: 0;
+  .gallery-item.far-far-prev,
+  .gallery-item.far-far-next {
+    display: none;
   }
 
-  .hamburger {
-    display: block;
+  .gallery-item.far-prev {
+    transform: translate(-105%, -50%) scale(0.6);
+    opacity: 0.5;
   }
 
-  /* Projects Grid */
-  .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .gallery-item.far-next {
+    transform: translate(5%, -50%) scale(0.6);
+    opacity: 0.5;
   }
 
-  /* Blog Posts */
-  .blog-post {
-    padding: 0.8rem;
+  .gallery-item.prev {
+    transform: translate(-80%, -50%) scale(0.7);
   }
 
-  /* Pagination */
+  .gallery-item.next {
+    transform: translate(-20%, -50%) scale(0.7);
+  }
+
+  .gallery-item img {
+    object-fit: contain;
+  }
+
   .pagination {
     gap: 1rem;
+    padding: 1rem 0;
   }
 
   .pagination button {
     width: 36px;
     height: 36px;
+    border: 2px solid #000;
+    font-size: 14px;
+  }
+
+  .page-number {
+    font-size: 0.95rem;
+    min-width: 50px;
+  }
+
+  /* Profile */
+  .profile-container {
+    width: 100%;
+    padding: 0 15px;
+    height: auto;
+  }
+
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .profile_img {
+    width: 260px;
+    height: 350px;
+    flex-shrink: 0;
+  }
+
+  .color_bg {
+    top: 15px;
+    left: 15px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+  }
+
+  .profile-info {
+    text-align: center;
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+
+  .profile-name {
+    width: 100%;
+    font-size: 20pt;
+    margin-bottom: 12px;
+  }
+
+  .profile-details {
+    font-size: 11pt;
+    margin-top: 8px;
+    line-height: 1.6;
+  }
+
+  /* Video */
+  .video-wrapper {
+    height: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .video-container {
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .video-item iframe {
+    width: 100%;
+    height: 250px;
+    border-radius: 8px;
+  }
+
+  .video-item p {
+    font-size: 0.95rem;
+    margin: 10px 0 3px;
+  }
+
+  .video-item span {
+    font-size: 0.8rem;
+  }
+
+  .video-item {
+    width: 100%;
+  }
+
+  /* Discography */
+  .discography-wrapper {
+    width: 100%;
+    padding: 25px 15px;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .album-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .album-list {
+    width: 100%;
+  }
+
+  .album-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .album-item {
+    flex: 0 0 170px;
+    text-align: center;
+    margin: 0;
+  }
+
+  .album-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .album-item p {
+    font-size: 0.95rem;
+    margin: 10px 0 3px;
+    font-weight: 600;
+  }
+
+  .album-item span {
+    font-size: 0.8rem;
   }
 
   /* Lightbox */
-  .lightbox-content {
-    max-width: 90vw;
-    max-height: 70vh;
+  .lightbox-overlay {
     padding: 10px;
+  }
+
+  .lightbox-content {
+    max-width: 95vw;
+    max-height: 75vh;
+    padding: 10px;
+  }
+
+  .lightbox-content img {
+    max-height: 75vh;
   }
 
   /* Sidebar */
   .sidebar {
-    padding: 0.8rem;
-    width: 30px;
+    padding: 0.8rem 0.5rem;
+    width: 32px;
   }
 
   .sidebar .s_line {
-    height: 20px;
+    height: 22px;
+    width: 1px;
   }
 
   .sidebar .page-number,
   .sidebar .page-title {
-    font-size: 7pt;
+    font-size: 7.5pt;
   }
 
   .s_line {
-    width: 30px;
-  }
-
-  .page-number {
-    font-size: 0.8rem;
+    width: 1px;
   }
 
   .page-title {
@@ -243,71 +581,61 @@
   }
 
   /* Footer */
+  .footer {
+    padding: 8px 12px;
+  }
+
   .footer-content {
     flex-direction: column;
-    gap: 1rem;
+    gap: 8px;
     text-align: center;
+    padding: 0 10px;
   }
 
-  .content {
-    padding: 30px 15px 80px;
-    min-height: calc(100vh - 120px);
-    width: 100%;
-  }
-
-  /* Điều chỉnh container cho các trang cụ thể */
-  .profile-container,
-  .video-container,
-  .gallery-container,
-  .album-container {
-    width: 100%;
-    padding: 0 15px;
-  }
-
-  /* Căn giữa nội dung trong các container */
-  .profile-content,
-  .video-wrapper,
-  .gallery-wrapper,
-  .discography-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .discography-wrapper {
-    padding: 20px 10px;
-    min-height: calc(100vh - 120px);
-  }
-
-  .album-container {
-    padding: 0;
-  }
-
-  .album-page {
+  .footer .social-links {
     gap: 20px;
+    justify-content: center;
   }
 
-  .album-item {
-    flex: 0 0 150px;
+  .footer .social-links a,
+  .footer .social-links a i {
+    font-size: 20px;
   }
 
-  .album-item p {
-    font-size: 1rem;
-  }
-
-  .album-item span {
-    font-size: 0.8rem;
+  .footer p {
+    font-size: 13px;
+    margin-left: 0;
   }
 }
 
 /* Small Mobile (up to 479px) */
 @media (max-width: 479px) {
+  /* Header & Navigation */
   .title {
     font-size: 18pt;
+    margin-bottom: 18px;
   }
 
+  .header {
+    padding: 0.8rem 0.6rem;
+    gap: 0.3rem;
+  }
+
+  .logo img {
+    height: 35px;
+    width: 35px;
+  }
+
+  .navbar {
+    padding: 0;
+    gap: 0.3rem;
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  /* Dropdown/Menu */
   .nav-links {
     width: 80%;
   }
@@ -316,7 +644,8 @@
     width: 100%;
     transform: translateX(100%);
     right: 0;
-    padding-top: 60px;
+    padding-top: 50px;
+    padding-bottom: 20px;
   }
 
   .dropdown-content.show {
@@ -326,30 +655,250 @@
 
   .dropdown-content a {
     font-size: 20px;
-    margin: 8px 0;
+    margin: 10px 0;
+    color: #fff;
   }
 
   .dropdown-content .social-links {
     bottom: 30px;
+    gap: 25px;
   }
 
+  .dropdown-content .social-links a {
+    font-size: 20px;
+  }
+
+  .dropdown-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .dropdown-btn i {
+    font-size: 1.1rem;
+  }
+
+  .exit-btn {
+    width: 32px;
+    height: 32px;
+    top: 0.8rem;
+    right: 0.6rem;
+  }
+
+  .exit-btn i {
+    font-size: 16px;
+  }
+
+  /* Content */
+  .content {
+    padding: 20px 12px 65px;
+    min-height: calc(100vh - 90px);
+  }
+
+  /* Gallery */
+  .gallery-wrapper {
+    width: 100%;
+    padding: 1rem 0;
+  }
+
+  .gallery-container {
+    max-height: 40vh;
+    aspect-ratio: 16/9;
+    width: 100%;
+  }
+
+  .gallery-item {
+    width: 80%;
+  }
+
+  .gallery-item.far-far-prev,
+  .gallery-item.far-far-next {
+    display: none;
+  }
+
+  .gallery-item.far-prev {
+    transform: translate(-110%, -50%) scale(0.55);
+    opacity: 0.4;
+  }
+
+  .gallery-item.far-next {
+    transform: translate(10%, -50%) scale(0.55);
+    opacity: 0.4;
+  }
+
+  .gallery-item.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .pagination {
+    gap: 0.8rem;
+    padding: 0.8rem 0;
+  }
+
+  .pagination button {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #000;
+    font-size: 13px;
+  }
+
+  .page-number {
+    font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  /* Profile */
+  .profile-container {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .profile-content {
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+  }
+
+  .profile_img {
+    width: 240px;
+    height: 320px;
+  }
+
+  .color_bg {
+    top: 12px;
+    left: 12px;
+  }
+
+  .profile-info {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .profile-name {
+    width: 100%;
+    font-size: 18pt;
+    margin-bottom: 10px;
+  }
+
+  .profile-details {
+    font-size: 10pt;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Video */
+  .video-wrapper {
+    height: auto;
+    padding: 12px;
+  }
+
+  .video-container {
+    max-width: 100%;
+    gap: 10px;
+  }
+
+  .video-item iframe {
+    width: 100%;
+    height: 220px;
+    border-radius: 6px;
+  }
+
+  .video-item p {
+    font-size: 0.9rem;
+    margin: 8px 0 2px;
+  }
+
+  .video-item span {
+    font-size: 0.75rem;
+  }
+
+  .video-list {
+    width: 100%;
+  }
+
+  .video-item {
+    width: 100%;
+  }
+
+  /* Discography */
+  .album-container {
+    width: 100%;
+    padding: 0;
+  }
+
+  .album-page {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .album-item p {
+    font-size: 0.9rem;
+    margin: 8px 0 2px;
+  }
+
+  .album-item span {
+    font-size: 0.75rem;
+  }
+
+  /* Lightbox */
   .lightbox-content {
-    max-width: 95vw;
-    width: 95vw;
-    padding: 10px;
+    max-width: 98vw;
+    max-height: 70vh;
+    padding: 8px;
   }
 
+  .lightbox-content img {
+    max-height: 70vh;
+  }
+
+  /* Sidebar */
   .sidebar {
-    width: 25px;
-    padding: 4px 2px;
+    width: 28px;
+    padding: 0.6rem 0.4rem;
   }
 
   .sidebar .page-number {
-    display: none; /* Ẩn số trang trên màn hình nhỏ */
+    display: none;
   }
 
-  .content {
-    padding: 20px 10px 70px;
+  .sidebar .s_line {
+    height: 18px;
+  }
+
+  .sidebar .page-title {
+    font-size: 7pt;
+  }
+
+  .s_line {
+    width: 1px;
+  }
+
+  .page-title {
+    font-size: 0.75rem;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 6px 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 8px;
+  }
+
+  .footer .social-links {
+    gap: 15px;
+    justify-content: center;
+  }
+
+  .footer .social-links a,
+  .footer .social-links a i {
+    font-size: 18px;
+  }
+
+  .footer p {
+    font-size: 12px;
   }
 
   /* Giảm padding cho các container trên màn hình nhỏ */
@@ -357,14 +906,14 @@
   .video-container,
   .gallery-container,
   .album-container {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   .discography-wrapper {
-    padding: 15px 5px;
+    padding: 18px 10px;
   }
 
   .album-item {
-    flex: 0 0 140px;
+    flex: 0 0 145px;
   }
 }

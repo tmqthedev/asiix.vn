@@ -224,6 +224,21 @@
 }
 
 @media (max-width: 479px) {
+    .title {
+        font-size: 18pt;
+        margin-bottom: 15px;
+    }
+
+    .gallery-wrapper {
+        width: 100%;
+        padding: 1rem 0;
+    }
+
+    .gallery-container {
+        max-height: 40vh;
+        aspect-ratio: 16/9;
+    }
+
     .gallery-item {
         width: 85%;
     }
@@ -232,5 +247,18 @@
     .gallery-item.far-next {
         transform: translate(-50%, -50%) scale(0.6);
         opacity: 0.3;
+    }
+
+    .pagination {
+        gap: 0.8rem;
+    }
+
+    .pagination button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .page-number {
+        font-size: 0.9rem;
     }
 }

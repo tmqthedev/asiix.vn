@@ -46,3 +46,57 @@
     color: rgba(255, 255, 255, 0.8);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
+
+/* Tablet Responsive (768px to 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .content-overlay {
+        padding: 15px;
+        width: 85%;
+        max-width: 600px;
+    }
+
+    .title {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .description {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile Responsive (480px to 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+    .content-overlay {
+        padding: 12px;
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
+}
+
+/* Small Mobile Responsive (up to 479px) */
+@media (max-width: 479px) {
+    .content-overlay {
+        padding: 10px;
+        width: 92%;
+        max-width: 400px;
+    }
+
+    .title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .description {
+        font-size: 0.8rem;
+    }
+}

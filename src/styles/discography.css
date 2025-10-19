@@ -115,3 +115,158 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+/* Tablet Responsive */
+@media (max-width: 1023px) and (min-width: 768px) {
+    .discography-wrapper {
+        padding: 30px 25px;
+    }
+
+    .title {
+        font-size: 24pt;
+        margin-bottom: 30px;
+    }
+
+    .album-container {
+        max-width: 100%;
+    }
+
+    .album-page {
+        gap: 25px;
+    }
+
+    .album-item {
+        flex: 0 0 180px;
+    }
+
+    .album-item p {
+        font-size: 1.1rem;
+        margin: 12px 0 3px;
+    }
+
+    .album-item span {
+        font-size: 0.85rem;
+    }
+
+    .pagination {
+        gap: 15px;
+    }
+
+    .pagination button {
+        font-size: 20px;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) and (min-width: 480px) {
+    .discography-wrapper {
+        width: 100%;
+        padding: 25px 15px;
+        min-height: calc(100vh - 120px);
+    }
+
+    .title {
+        font-size: 20pt;
+        margin-bottom: 22px;
+    }
+
+    .album-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+
+    .album-list {
+        width: 100%;
+    }
+
+    .album-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .album-item {
+        flex: 0 0 170px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .album-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .album-item p {
+        font-size: 0.95rem;
+        margin: 10px 0 3px;
+        font-weight: 600;
+    }
+
+    .album-item span {
+        font-size: 0.8rem;
+    }
+
+    .pagination {
+        gap: 12px;
+    }
+
+    .pagination button {
+        font-size: 18px;
+    }
+
+    .pagination .page-number {
+        font-size: 0.95rem;
+        min-width: 50px;
+    }
+}
+
+/* Small Mobile Responsive */
+@media (max-width: 479px) {
+    .discography-wrapper {
+        padding: 20px 12px;
+        min-height: calc(100vh - 100px);
+        width: 100%;
+    }
+
+    .title {
+        font-size: 18pt;
+        margin-bottom: 18px;
+    }
+
+    .album-container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .album-page {
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .album-item p {
+        font-size: 0.9rem;
+        margin: 8px 0 2px;
+    }
+
+    .album-item span {
+        font-size: 0.75rem;
+    }
+
+    .pagination {
+        gap: 10px;
+    }
+
+    .pagination button {
+        font-size: 16px;
+    }
+
+    .pagination .page-number {
+        font-size: 0.9rem;
+        min-width: 45px;
+    }
+}
