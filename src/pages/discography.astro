@@ -1,0 +1,151 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/discography.css";
+
+const albums = [
+  {
+    src: "src/images/discography/CONGB_EDALC.jpg",
+    alt: "EDALC",
+    title: "Em Doi Anh Lau Chua?",
+    date: "2023.12.16"
+  },
+];
+
+let currentPage = 1;
+const itemsPerPage = 5;
+const totalPages = Math.ceil(albums.length / itemsPerPage);
+---
+<BaseLayout title="asiix: Discography">
+  <div class="discography-wrapper" data-total-pages={totalPages}>
+    <h1 class="title">Discography</h1>
+    <div class="album-container">
+      <div class="album-list">
+        {
+          Array.from({ length: totalPages }).map((_, pageIndex) => (
+            <div class="album-page" data-page={pageIndex + 1}>
+              {albums
+                .slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage)
+                .map((album) => (
+                  <div class="album-item">
+                    <img src={album.src} alt={album.alt} />
+                    <p>{album.title}</p>
+                    <span>{album.date}</span>
+                  </div>
+                ))}
+            </div>
+          ))
+        }
+      </div>
+      <div class="pagination">
+        <button class="prev" aria-label="Previous page">&lt;</button>
+        <span class="page-number">{currentPage} / {totalPages}</span>
+        <button class="next" aria-label="Next page">&gt;</button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const albumPagination = {
+    albumList: null as HTMLElement | null,
+    pages: null as NodeListOf<Element> | null,
+    prevButton: null as HTMLButtonElement | null,
+    nextButton: null as HTMLButtonElement | null,
+    pageNumber: null as HTMLElement | null,
+    currentPage: 1,
+    totalPages: 0,
+    isAnimating: false,
+    init() {
+      // Initialize elements
+      this.albumList = document.querySelector('.album-list');
+      this.pages = document.querySelectorAll('.album-page');
+      this.prevButton = document.querySelector('.pagination .prev');
+      this.nextButton = document.querySelector('.pagination .next');
+      this.pageNumber = document.querySelector('.pagination .page-number');
+      this.currentPage = 1;
+      this.totalPages = this.pages.length;
+      this.isAnimating = false;
+
+      // Set initial states
+      this.pages.forEach((page, index) => {
+        if (!(page instanceof HTMLElement)) return;
+        page.style.display = index === 0 ? 'flex' : 'none';
+        page.style.opacity = index === 0 ? '1' : '0';
+      });
+
+      this.updateButtons();
+      this.updatePageNumber();
+      this.addEventListeners();
+    },
+
+    updatePageNumber() {
+      if (this.pageNumber) {
+        this.pageNumber.textContent = `${this.currentPage} / ${this.totalPages}`;
+      }
+    },
+
+    updateButtons() {
+      if (this.prevButton) {
+        this.prevButton.disabled = this.currentPage <= 1;
+      }
+      if (this.nextButton) {
+        this.nextButton.disabled = this.currentPage >= this.totalPages;
+      }
+    },
+
+    showPage(pageNum: number) {
+      if (this.isAnimating || pageNum < 1 || pageNum > this.totalPages) return;
+
+      this.isAnimating = true;
+      this.currentPage = pageNum;
+
+      requestAnimationFrame(() => {
+        if (!this.pages) return;
+        this.pages.forEach(page => {
+          if (!(page instanceof HTMLElement)) return;
+          
+          const pageIndex = parseInt(page.getAttribute('data-page') || '1');
+          if (pageIndex === this.currentPage) {
+            page.style.display = 'flex';
+            setTimeout(() => {
+              page.style.opacity = '1';
+            }, 50);
+          } else {
+            page.style.opacity = '0';
+            setTimeout(() => {
+              page.style.display = 'none';
+            }, 300);
+          }
+        });
+
+        this.updatePageNumber();
+        this.updateButtons();
+
+        setTimeout(() => {
+          this.isAnimating = false;
+        }, 300);
+      });
+    },
+
+    addEventListeners() {
+      this.prevButton?.addEventListener('click', () => {
+        if (!this.isAnimating && this.currentPage > 1) {
+          this.showPage(this.currentPage - 1);
+        }
+      });
+
+      this.nextButton?.addEventListener('click', () => {
+        if (!this.isAnimating && this.currentPage < this.totalPages) {
+          this.showPage(this.currentPage + 1);
+        }
+      });
+    }
+  };
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => albumPagination.init());
+  } else {
+    albumPagination.init();
+  }
+</script>

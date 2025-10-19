@@ -1,0 +1,236 @@
+.title {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top: 0;
+    font-size: 28pt;
+    color: #000;
+    letter-spacing: 0.05em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 40px;
+}
+
+/* Gallery Container */
+.gallery-wrapper {
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.gallery-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    max-height: 40vh;
+    margin: 0 auto;
+    overflow: visible;
+    perspective: 1000px;
+}
+
+.gallery-list {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Gallery Items */
+.gallery-item {
+    position: absolute;
+    width: 35%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translate(-50%, -50%) scale(0.5);
+}
+
+.gallery-item.far-far-prev {
+    transform: translate(-140%, -50%) scale(0.5);
+    opacity: 0.8;
+    filter: blur(1px);
+    visibility: visible;
+    z-index: 0;
+}
+
+.gallery-item.far-prev {
+    transform: translate(-90%, -50%) scale(0.65);
+    opacity: 0.85;
+    filter: blur(0.75px);
+    visibility: visible;
+    z-index: 1;
+}
+
+.gallery-item.prev {
+    transform: translate(-80%, -50%) scale(0.75);
+    opacity: 0.9;
+    filter: blur(0.5px);
+    visibility: visible;
+    z-index: 1;
+    transform-origin: right center;
+}
+
+.gallery-item.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    filter: blur(0);
+    visibility: visible;
+    z-index: 3;
+    pointer-events: auto;
+}
+
+.gallery-item.next {
+    transform: translate(-20%, -50%) scale(0.75);
+    opacity: 0.9;
+    filter: blur(0.5px);
+    visibility: visible;
+    z-index: 1;
+    transform-origin: left center;
+}
+
+.gallery-item.far-next {
+    transform: translate(-10%, -50%) scale(0.65);
+    opacity: 0.85;
+    filter: blur(0.75px);
+    visibility: visible;
+    z-index: 1;
+}
+
+.gallery-item.far-far-next {
+    transform: translate(40%, -50%) scale(0.5);
+    opacity: 0.8;
+    filter: blur(1px);
+    visibility: visible;
+    z-index: 0;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+/* Pagination */
+.pagination {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1rem 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.pagination button {
+    background: transparent;
+    border: 2px solid #000;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+    background: #000;
+    color: #fff;
+}
+
+.pagination button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.page-number {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1003; /* Increased z-index to be above dropdown button */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    padding: 20px;
+    cursor: default;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+    .gallery-item {
+        width: 70%;
+    }
+
+    .gallery-item.far-far-prev,
+    .gallery-item.far-far-next {
+        display: none;
+    }
+
+    .gallery-item.active {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    .gallery-item.far-prev {
+        transform: translate(-100%, -50%) scale(0.7);
+        opacity: 0.4;
+    }
+
+    .gallery-item.far-next {
+        transform: translate(0%, -50%) scale(0.7);
+        opacity: 0.4;
+    }
+}
+
+@media (max-width: 479px) {
+    .gallery-item {
+        width: 85%;
+    }
+
+    .gallery-item.far-prev,
+    .gallery-item.far-next {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.3;
+    }
+}

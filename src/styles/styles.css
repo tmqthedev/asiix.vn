@@ -1,0 +1,554 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f4f4;
+  color: #333;
+  text-align: center;
+}
+
+/* Header */
+.header {
+  background-color: transparent;
+  color: rgba(1, 0, 0, 0.8);
+  padding: 30px 40px;
+  z-index: 10;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo img {
+  height: 50px;
+  width: 50px;
+  display: block;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+  padding: 0 40px;
+  gap: 30px;
+  position: relative;
+  padding-right: 0;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  z-index: 1002;
+}
+
+/* Reset Font Awesome default styles */
+.fas, .fab {
+  font-size: inherit;
+  width: auto !important;
+  height: auto !important;
+  line-height: normal !important;
+}
+
+/* Reset tất cả các style mặc định của Font Awesome */
+.fa-bars,
+.fa-times,
+.fa-xmark,
+.fa-instagram,
+.fa-facebook-f {
+  display: inline-flex !important;
+  width: unset !important;
+  height: unset !important;
+  font-size: unset !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+}
+
+/* Reset Font Awesome icon styles */
+.fa,
+.fas,
+.far,
+.fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* Ensure icons are visible */
+.fa-bars,
+.fa-xmark,
+.fa-instagram,
+.fa-facebook-f {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", sans-serif !important;
+  font-weight: 900;
+  display: inline-block !important;
+  font-size: 24px !important;
+}
+
+.dropdown-btn {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1002;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.dropdown-btn:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-btn i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.dropdown-btn:hover .menu-icon {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.dropdown-btn:hover .close-icon {
+  transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+}
+
+.dropdown-btn .menu-icon {
+  opacity: 1;
+  visibility: visible;
+  color: #000;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.dropdown-btn .close-icon {
+  opacity: 0;
+  visibility: hidden;
+  color: #fff;
+  transform: translate(-50%, -50%) rotate(-180deg) scale(0.5);
+}
+
+.dropdown-btn.active .menu-icon {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.dropdown-btn.active .close-icon {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) rotate(0) scale(1);
+}
+
+.menu-icon,
+.close-icon {
+  transition: opacity 0.3s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+.dropdown-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.dropdown-content.show {
+  display: flex;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dropdown-content.show .menu-items {
+  animation: slideUp 0.4s ease 0.2s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Điều chỉnh styles cho menu items */
+.dropdown-content a {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: #fff;
+  text-decoration: none;
+  font-size: 36px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.dropdown-content.show a {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.dropdown-content a:hover {
+  font-size: xx-large;
+  color: #ffcc00;
+}
+
+.exit-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exit-btn i {
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+}
+
+.exit-btn:hover i {
+  transform: rotate(90deg);
+}
+
+.social-links {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  display: flex;
+  gap: 20px;
+}
+
+.social-links a {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 24px;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #fff;
+  background: none;
+}
+
+.dropdown-content .social-links {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: auto;
+}
+
+.dropdown-content .social-links a,
+.footer .social-links a {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  font-size: 24px;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-content .social-links a:hover {
+  transform: scale(1.2);
+}
+
+.dropdown-content .social-links a[href*="instagram"]:hover {
+  color: #E4405F;
+}
+
+.dropdown-content .social-links a[href*="facebook"]:hover {
+  color: #1877F2;
+}
+
+/* Điều chỉnh social icons trong dropdown */
+.dropdown-content .social-links a i {
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+/* Content Styling */
+.content {
+  padding: 50px 20px 100px;
+  min-height: calc(100vh - 150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.title {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 18px;
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Side bar */
+.sidebar {
+  opacity: 1;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%) translateZ(0);
+  width: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  text-align: center;
+  z-index: 1000;
+  padding: 8px 5px;
+  border-radius: 8px 0 0 8px;
+  visibility: visible;
+  transition: all 0.3s ease;
+  backface-visibility: hidden;
+}
+
+.sidebar .side2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar .s_line {
+  width: 1px;
+  height: 30px;
+  background-color: #fff;
+  margin: 5px 0;
+}
+
+.sidebar .page-number,
+.sidebar .page-title {
+  font-size: 9pt;
+  letter-spacing: 0.05em;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin: 5px 0;
+  white-space: nowrap;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar .page-title {
+  font-size: 10pt;
+}
+
+.sidebar.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  z-index: 10;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.footer .social-links {
+  display: flex;
+  gap: 30px;
+}
+
+.footer .social-links a {
+  font-size: 24px;
+  color: #ffcc00;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.footer .social-links a:hover {
+  transform: scale(1.2);
+}
+
+.footer .social-links a[href*="instagram"]:hover {
+  color: #E4405F;
+}
+
+.footer .social-links a[href*="facebook"]:hover {
+  color: #1877F2;
+}
+
+.footer p {
+  color: #ffcc00;
+  margin-left: auto;
+}
+
+.footer .social-links a,
+.footer .social-links a i {
+  color: #ffcc00 !important;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.footer .social-links a[href*="instagram"]:hover,
+.footer .social-links a[href*="instagram"]:hover i {
+  color: #E4405F !important;
+}
+
+.footer .social-links a[href*="facebook"]:hover,
+.footer .social-links a[href*="facebook"]:hover i {
+  color: #1877F2 !important;
+}
+
+/* Social Media Icons - Base styles */
+.fa-instagram,
+.fa-facebook-f {
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  line-height: 24px !important;
+  text-align: center;
+}
+
+.dropdown-content .social-links a {
+  color: #fff;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Add will-change for better performance */
+.gallery-item {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.error-message {
+  padding: 20px;
+  margin: 20px 0;
+  background: #fff3f3;
+  border: 1px solid #ffcdd2;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.error-message p {
+  color: #d32f2f;
+  margin-bottom: 10px;
+}
+
+.error-message button {
+  padding: 8px 16px;
+  background: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error-message button:hover {
+  background: #b71c1c;
+}

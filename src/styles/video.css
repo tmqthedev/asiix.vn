@@ -1,0 +1,87 @@
+.video-wrapper {
+    height: 65vh;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.video-container {
+    max-width: 1200px; /* Increased for wider container */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.video-item iframe {
+    width: 100%;
+    max-width: 1120px; /* Increased width */
+    height: 360px; /* Fixed height */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border: none;
+    margin: 0 auto;
+}
+
+.video-list {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.video-item {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.video-item p {
+    margin: 2px 0;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.video-item span {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0;
+    margin-top: -10px;
+}
+  
+.pagination button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+  
+.pagination button:not(:disabled):hover {
+    color: #000;
+}
+  
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+  
+.pagination .page-number {
+    color: #333;
+    font-size: 1.1rem;
+    min-width: 60px;
+    text-align: center;
+}

@@ -1,0 +1,194 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/gallery.css";
+
+const images = [
+  {
+    src: "src/images/gallery/1.jpg",
+    alt: "Image 1",
+    title: "Image 1",
+    date: "2023.12.16"
+  },
+  {
+    src: "src/images/gallery/2.jpg",
+    alt: "Image 2",
+    title: "Image 2",
+    date: "2023.12.16"
+  },
+  {
+    src: "src/images/gallery/3.jpg",
+    alt: "Image 3",
+    title: "Image 3",
+    date: "2023.12.16"
+  },
+  {
+    src: "src/images/gallery/4.jpg",
+    alt: "Image 4",
+    title: "Image 4",
+    date: "2023.12.16"
+  },
+  {
+    src: "src/images/gallery/5.jpg",
+    alt: "Image 5",
+    title: "Image 5",
+    date: "2023.12.16"
+  },
+];
+
+const itemsPerPage = 1;
+const totalPages = Math.ceil(images.length / itemsPerPage);
+---
+
+<BaseLayout title="asiix: Gallery">
+  <div class="gallery-wrapper" data-total-pages={totalPages}>
+    <h1 class="title">Gallery</h1>
+    <div class="gallery-container">
+      <div class="gallery-list">
+        {
+          images.map((image, index) => (
+            <div class={`gallery-item ${index === 0 ? 'active' : ''}`} data-index={index + 1}>
+              <img src={image.src} alt={image.alt} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div class="pagination">
+      <button class="prev" aria-label="Previous page">&lt;</button>
+      <span class="page-number">1 / {totalPages}</span>
+      <button class="next" aria-label="Next page">&gt;</button>
+    </div>
+  </div>
+  
+  <div class="lightbox-overlay">
+    <div class="lightbox-content">
+      <img src="" alt="" />
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const galleryPagination = {
+    container: null as HTMLElement | null,
+    items: null as NodeList | null,
+    prevButton: null as HTMLButtonElement | null,
+    nextButton: null as HTMLButtonElement | null,
+    pageNumber: null as HTMLElement | null,
+    currentPage: 1,
+    totalPages: 0,
+    isAnimating: false,
+
+    init() {
+      this.container = document.querySelector('.gallery-container');
+      this.items = document.querySelectorAll('.gallery-item');
+      this.prevButton = document.querySelector('.pagination .prev');
+      this.nextButton = document.querySelector('.pagination .next');
+      this.pageNumber = document.querySelector('.pagination .page-number');
+      this.currentPage = 1;
+      this.totalPages = this.items.length;
+      this.isAnimating = false;
+
+      this.showPage(1);
+      this.addEventListeners();
+    },
+
+    showPage(pageNum: number) {
+      if (this.isAnimating) return;
+      this.isAnimating = true;
+
+      if (pageNum < 1) pageNum = this.totalPages;
+      if (pageNum > this.totalPages) pageNum = 1;
+
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.classList.remove('active', 'far-far-prev', 'far-prev', 'next', 'far-next', 'far-far-next');
+      });
+
+      const positions = ['far-far-prev', 'far-prev', 'active', 'far-next', 'far-far-next'];
+      const totalItems = this.totalPages;
+      
+      for (let i = 0; i < positions.length; i++) {
+        let index = pageNum - Math.floor(positions.length / 2) + i;
+        
+        if (index < 1) index += totalItems;
+        if (index > totalItems) index -= totalItems;
+        
+        document.querySelector(`.gallery-item[data-index="${index}"]`)?.classList.add(positions[i]);
+      }
+
+      this.currentPage = pageNum;
+      
+      if (this.pageNumber) {
+        this.pageNumber.textContent = `${this.currentPage} / ${this.totalPages}`;
+      }
+
+      setTimeout(() => {
+        this.isAnimating = false;
+      }, 500);
+    },
+
+    addEventListeners() {
+      this.prevButton?.addEventListener('click', () => {
+        if (!this.isAnimating) {
+          this.showPage(this.currentPage - 1);
+        }
+      });
+
+      this.nextButton?.addEventListener('click', () => {
+        if (!this.isAnimating) {
+          this.showPage(this.currentPage + 1);
+        }
+      });
+    }
+  };
+
+  const lightbox = {
+    overlay: null as HTMLElement | null,
+    image: null as HTMLImageElement | null,
+    
+    init() {
+      this.overlay = document.querySelector('.lightbox-overlay');
+      this.image = this.overlay?.querySelector('img') as HTMLImageElement;
+      
+      document.querySelectorAll('.gallery-item img').forEach(img => {
+        img.addEventListener('click', (e) => this.open(e.target as HTMLImageElement));
+      });
+      
+      this.overlay?.addEventListener('click', () => this.close());
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.overlay?.classList.contains('active')) {
+          this.close();
+        }
+      });
+
+      this.image?.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    },
+    
+    open(img: HTMLImageElement) {
+      if (!this.overlay || !this.image) return;
+      this.image.src = img.src;
+      this.image.alt = img.alt;
+      this.overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    },
+    
+    close() {
+      if (!this.overlay) return;
+      this.overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        if (this.image) {
+          this.image.src = '';
+          this.image.alt = '';
+        }
+      }, 300);
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    galleryPagination.init();
+    lightbox.init();
+  });
+</script>

@@ -1,0 +1,167 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import "../styles/video.css";
+
+const videos = [
+  {
+    src: "https://www.youtube.com/embed/05SC7-A_uak?si=m05BsMFxDuEU-Enn&autoplay=0&fs=1&modestbranding=1",
+    title: "Em Doi Anh Lau Chua?",
+    date: "2023.12.16"
+  },
+];
+
+const itemsPerPage = 1;
+const totalPages = Math.ceil(videos.length / itemsPerPage);
+---
+
+<BaseLayout title="asiix: Videos">
+  <div class="video-wrapper" data-total-pages={totalPages}>
+    <h1 class="title">Videos</h1>
+    <div class="video-container">
+      <div class="video-list">
+        {
+          Array.from({ length: totalPages }).map((_, pageIndex) => (
+            <div class="video-page" data-page={pageIndex + 1}>
+              {videos
+                .slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage)
+                .map((video) => (
+                <div class="video-item">
+                <iframe 
+                    src={video.src}
+                    title={video.title}
+                    width="100%"
+                    height="100%"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                    allowfullscreen
+                ></iframe>
+                <p>{video.title}</p>
+                <span>{video.date}</span>
+                </div>
+                ))}
+            </div>
+          ))
+        }
+      </div>
+      <div class="pagination">
+        <button class="prev" aria-label="Previous page">&lt;</button>
+        <span class="page-number">1 / {totalPages}</span>
+        <button class="next" aria-label="Next page">&gt;</button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const videoPagination = {
+    container: null as HTMLElement | null,
+    pages: null as NodeListOf<Element> | null,
+    prevButton: null as HTMLButtonElement | null,
+    nextButton: null as HTMLButtonElement | null,
+    pageNumber: null as HTMLElement | null,
+    currentPage: 1,
+    totalPages: 0,
+    isAnimating: false,
+
+    init() {
+      this.container = document.querySelector('.video-container');
+      this.pages = document.querySelectorAll('.video-page');
+      this.prevButton = document.querySelector('.pagination .prev');
+      this.nextButton = document.querySelector('.pagination .next');
+      this.pageNumber = document.querySelector('.pagination .page-number');
+      this.currentPage = 1;
+      this.totalPages = this.pages.length;
+      this.isAnimating = false;
+
+      this.showPage(1);
+      this.addEventListeners();
+    },
+
+    showPage(pageNum: number) {
+        if (this.isAnimating || pageNum < 1 || pageNum > this.totalPages) return;
+  
+        this.isAnimating = true;
+        const direction = pageNum > this.currentPage ? 1 : -1;
+        this.currentPage = pageNum;
+  
+        if (this.pages) {
+          this.pages.forEach(page => {
+            if (!(page instanceof HTMLElement)) return;
+            
+            const pageIndex = parseInt(page.getAttribute('data-page') || '1');
+            
+            if (pageIndex === this.currentPage) {
+              page.style.cssText = `
+                display: block;
+                opacity: 0;
+                transform: translateX(${direction * 100}%);
+                transition: all 0.3s ease-in-out;
+              `;
+              
+              requestAnimationFrame(() => {
+                page.style.cssText = `
+                  display: block;
+                  opacity: 1;
+                  transform: translateX(0);
+                  transition: all 0.3s ease-in-out;
+                `;
+              });
+            } else {
+              page.style.cssText = `
+                display: block;
+                opacity: 1;
+                transform: translateX(0);
+                transition: all 0.3s ease-in-out;
+              `;
+              
+              requestAnimationFrame(() => {
+                page.style.cssText = `
+                  display: block;
+                  opacity: 0;
+                  transform: translateX(${-direction * 100}%);
+                  transition: all 0.3s ease-in-out;
+                `;
+              });
+  
+              setTimeout(() => {
+                page.style.display = 'none';
+              }, 300);
+            }
+          });
+        }
+  
+        // Update pagination
+        if (this.pageNumber) {
+          this.pageNumber.textContent = `${this.currentPage} / ${this.totalPages}`;
+        }
+  
+        if (this.prevButton) {
+          this.prevButton.disabled = this.currentPage <= 1;
+        }
+        if (this.nextButton) {
+          this.nextButton.disabled = this.currentPage >= this.totalPages;
+        }
+  
+        setTimeout(() => {
+          this.isAnimating = false;
+        }, 300);
+      },
+
+    addEventListeners() {
+      this.prevButton?.addEventListener('click', () => {
+        if (!this.isAnimating && this.currentPage > 1) {
+          this.showPage(this.currentPage - 1);
+        }
+      });
+
+      this.nextButton?.addEventListener('click', () => {
+        if (!this.isAnimating && this.currentPage < this.totalPages) {
+          this.showPage(this.currentPage + 1);
+        }
+      });
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    videoPagination.init();
+  });
+</script>
