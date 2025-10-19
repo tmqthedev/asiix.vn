@@ -45,6 +45,7 @@ X-Content-Type-Options = "nosniff"
 X-XSS-Protection = "1; mode=block"
 Referrer-Policy = "strict-origin-when-cross-origin"
 Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://cdnjs.cloudflare.com https://ka-f.fontawesome.com https://fonts.gstatic.com; frame-src https://www.youtube.com; connect-src 'self';"
 
 [[redirects]]
 from = "/*"
