@@ -27,7 +27,7 @@ const totalPages = Math.ceil(albums.length / itemsPerPage);
                 .slice(pageIndex * itemsPerPage, (pageIndex + 1) * itemsPerPage)
                 .map((album) => (
                   <div class="album-item">
-                    <img src={album.src} alt={album.alt} />
+                    <img src={album.src} alt={album.alt} loading="lazy" decoding="async" fetchpriority="low" />
                     <p>{album.title}</p>
                     <span>{album.date}</span>
                   </div>

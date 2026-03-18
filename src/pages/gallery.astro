@@ -47,7 +47,13 @@ const totalPages = Math.ceil(images.length / itemsPerPage);
         {
           images.map((image, index) => (
             <div class={`gallery-item ${index === 0 ? 'active' : ''}`} data-index={index + 1}>
-              <img src={image.src} alt={image.alt} />
+              <img
+                src={image.src}
+                alt={image.alt}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchpriority={index === 0 ? 'high' : 'low'}
+              />
             </div>
           ))
         }
@@ -70,7 +76,7 @@ const totalPages = Math.ceil(images.length / itemsPerPage);
 <script>
   const galleryPagination = {
     container: null as HTMLElement | null,
-    items: null as NodeList | null,
+    items: null as NodeListOf<HTMLElement> | null,
     prevButton: null as HTMLButtonElement | null,
     nextButton: null as HTMLButtonElement | null,
     pageNumber: null as HTMLElement | null,
@@ -80,7 +86,7 @@ const totalPages = Math.ceil(images.length / itemsPerPage);
 
     init() {
       this.container = document.querySelector('.gallery-container');
-      this.items = document.querySelectorAll('.gallery-item');
+      this.items = document.querySelectorAll<HTMLElement>('.gallery-item');
       this.prevButton = document.querySelector('.pagination .prev');
       this.nextButton = document.querySelector('.pagination .next');
       this.pageNumber = document.querySelector('.pagination .page-number');
@@ -99,7 +105,8 @@ const totalPages = Math.ceil(images.length / itemsPerPage);
       if (pageNum < 1) pageNum = this.totalPages;
       if (pageNum > this.totalPages) pageNum = 1;
 
-      document.querySelectorAll('.gallery-item').forEach(item => {
+      if (!this.items) return;
+      this.items.forEach(item => {
         item.classList.remove('active', 'far-far-prev', 'far-prev', 'next', 'far-next', 'far-far-next');
       });
 

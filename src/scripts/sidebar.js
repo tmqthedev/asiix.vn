@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarPageTitle = document.querySelector('.sidebar .page-title');
     const dropdownLinks = document.querySelectorAll('.dropdown-content a');
 
+    if (!sidebarPageNumber || !sidebarPageTitle) {
+      return;
+    }
+
     // Set page number and title without animation
     if (currentPath === '/' || currentPath === '/index.html') {
       sidebarPageNumber.textContent = '00';

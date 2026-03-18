@@ -7,110 +7,130 @@ import "../styles/index.css"
         <div id="youtube-player"></div>
     </div>
     <div class="content-overlay">
-        <h1 class="title" style="color: white;">Welcome to asiix Official Website</h1>
+        <h1 class="title">Welcome to asiix Official Website</h1>
         <p class="description">Latest news, music, and media about asiix.</p> 
     </div>
 </BaseLayout>
 
-<script is:inline>
-    // Đảm bảo YT API được load
-    if (!window.YT) {
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-
-    // Khởi tạo player khi API sẵn sàng
-    window.onYouTubeIframeAPIReady = function() {
-        new YT.Player('youtube-player', {
-            videoId: '05SC7-A_uak',
-            playerVars: {
-                autoplay: 1,
-                controls: 0,
-                showinfo: 0,
-                modestbranding: 1,
-                loop: 1,
-                playlist: '05SC7-A_uak',
-                mute: 1,
-                playsinline: 1,
-                rel: 0,
-                enablejsapi: 1,
-                origin: window.location.origin
-            },
-            events: {
-                onReady: function(event) {
-                    event.target.playVideo();
-                },
-                onStateChange: function(event) {
-                    if (event.data === YT.PlayerState.ENDED) {
-                        event.target.playVideo();
-                    }
-                },
-                onError: function() {
-                    useFallbackVideo();
-                }
-            }
-        });
+<script>
+    type YouTubeApi = {
+        Player: new (id: string, options: Record<string, unknown>) => unknown;
+        PlayerState: { ENDED: number };
     };
 
-    // Fallback function
+    declare global {
+        interface Window {
+            YT?: YouTubeApi;
+            onYouTubeIframeAPIReady?: () => void;
+        }
+
+        interface Navigator {
+            connection?: { saveData?: boolean };
+        }
+    }
+
+    const VIDEO_ID = '05SC7-A_uak';
+    let youtubeApiPromise: Promise<YouTubeApi | undefined> | null = null;
+
+    function loadYouTubeApi() {
+        if (window.YT?.Player) {
+            return Promise.resolve(window.YT);
+        }
+
+        if (youtubeApiPromise) {
+            return youtubeApiPromise;
+        }
+
+        youtubeApiPromise = new Promise((resolve, reject) => {
+            const existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+            if (!existingScript) {
+                const tag = document.createElement('script');
+                tag.src = 'https://www.youtube.com/iframe_api';
+                tag.async = true;
+                tag.onerror = () => reject(new Error('Failed to load YouTube API'));
+                document.head.appendChild(tag);
+            }
+
+            window.onYouTubeIframeAPIReady = () => resolve(window.YT);
+
+            setTimeout(() => {
+                if (!window.YT?.Player) {
+                    reject(new Error('YouTube API timeout'));
+                }
+            }, 5000);
+        });
+
+        return youtubeApiPromise;
+    }
+
     function useFallbackVideo() {
         const container = document.querySelector('.video-background');
-        if (container) {
-            container.innerHTML = `
-                <iframe
-                    src="https://www.youtube.com/embed/05SC7-A_uak?autoplay=1&mute=1&controls=0&loop=1&playlist=05SC7-A_uak&modestbranding=1&showinfo=0&rel=0&playsinline=1"
-                    title="CONGB 'Em Đợi Anh Lâu Chưa?' Official M/V"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
-            `;
-        }
+        if (!container) return;
+
+        container.innerHTML = `
+            <iframe
+                src="https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=0&loop=1&playlist=${VIDEO_ID}&modestbranding=1&showinfo=0&rel=0&playsinline=1"
+                title="CONGB Official MV"
+                loading="lazy"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+            ></iframe>
+        `;
     }
 
-    // Fallback nếu API không load được sau 5 giây
-    setTimeout(() => {
-        if (!window.YT || !window.YT.Player) {
+    async function initializeHomeVideo() {
+        if (navigator.connection?.saveData) {
+            useFallbackVideo();
+            return;
+        }
+
+        try {
+            await loadYouTubeApi();
+            if (!window.YT?.Player) {
+                throw new Error('YT player unavailable');
+            }
+
+            new window.YT.Player('youtube-player', {
+                videoId: VIDEO_ID,
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    modestbranding: 1,
+                    loop: 1,
+                    playlist: VIDEO_ID,
+                    mute: 1,
+                    playsinline: 1,
+                    rel: 0,
+                    enablejsapi: 1,
+                    origin: window.location.origin
+                },
+                events: {
+                    onReady: (event: any) => {
+                        event.target.playVideo();
+                    },
+                    onStateChange: (event: any) => {
+                        if (event.data === window.YT?.PlayerState?.ENDED) {
+                            event.target.playVideo();
+                        }
+                    },
+                    onError: () => {
+                        useFallbackVideo();
+                    }
+                }
+            });
+        } catch {
             useFallbackVideo();
         }
-    }, 5000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(initializeHomeVideo, { timeout: 2500 });
+            return;
+        }
+
+        setTimeout(initializeHomeVideo, 300);
+    });
 </script>
-
-<style>
-    .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100vh;
-        overflow: hidden;
-        z-index: -1;
-    }
-
-    .video-background #youtube-player,
-    .video-background iframe {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100vw;
-        height: 100vh;
-        transform: translate(-50%, -50%);
-        pointer-events: none;
-    }
-
-    @media (min-aspect-ratio: 16/9) {
-        .video-background #youtube-player,
-        .video-background iframe {
-            height: 56.25vw;
-        }
-    }
-
-    @media (max-aspect-ratio: 16/9) {
-        .video-background #youtube-player,
-        .video-background iframe {
-            width: 177.78vh;
-        }
-    }
-</style>

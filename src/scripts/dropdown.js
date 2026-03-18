@@ -1,10 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const dropdownBtn = document.querySelector('.dropdown-btn');
   const dropdownContent = document.querySelector('.dropdown-content');
-  const menuItems = document.querySelector('.menu-items');
   const sidebar = document.querySelector('.sidebar');
   let isOpen = false;
   let isAnimating = false;
+
+  if (!dropdownBtn || !dropdownContent) {
+    return;
+  }
 
   const toggleMenu = () => {
     if (isAnimating) return;
@@ -34,44 +37,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   };
 
-  // Only attach events if elements exist
-  if (dropdownBtn && dropdownContent && menuItems) {
-    dropdownBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
+  dropdownBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  // Close menu when clicking links
+  document.querySelectorAll('.dropdown-content a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (isOpen) {
+        toggleMenu();
+      }
     });
+  });
 
-    // Close menu when clicking links
-    document.querySelectorAll('.dropdown-content a').forEach(link => {
-      link.addEventListener('click', () => {
-        if (isOpen) {
-          toggleMenu();
-        }
-      });
-    });
+  // Close menu on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) toggleMenu();
+  });
 
-    // Close menu on ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && isOpen) toggleMenu();
-    });
+  // Prevent closing when clicking inside dropdown content
+  dropdownContent.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
 
-    // Prevent closing when clicking inside dropdown content
-    dropdownContent.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
+  // Close when clicking outside
+  document.addEventListener('click', () => {
+    if (isOpen) toggleMenu();
+  });
 
-    // Close when clicking outside
-    document.addEventListener('click', () => {
-      if (isOpen) toggleMenu();
-    });
-
-    // Prevent scroll when menu is open
-    document.addEventListener('wheel', (e) => {
-      if (isOpen) e.preventDefault();
-    }, { passive: false });
-
-    // Dispatch event when dropdown is ready
-    window.dispatchEvent(new Event('dropdownReady'));
-  }
+  // Dispatch event when dropdown is ready
+  window.dispatchEvent(new Event('dropdownReady'));
 });
